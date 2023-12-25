@@ -1,0 +1,66 @@
+.sidebarcontainer{
+    background-color:#323131;
+    width:250px; 
+    height:650px;  
+}
+.top{
+   border:1px solid black;
+   padding:10px;
+   display:flex;
+   flex-direction:row;
+}
+.icon{
+    margin:10px;
+}
+.title{
+   margin:10px;
+}
+.logo{
+    font-size:1.5rem;
+    color:#e0e0e0;
+    padding:50px;
+}
+.optiondashboard{
+    border:1px solid black;
+    display:flex;
+    flex-direction:row;
+}
+.optiondashboard{
+    color: #fff;
+}
+.optionicon{
+    margin:10px;
+    color:#e0e0e0;
+}
+.optionicon:hover{
+    color:#fff;
+}
+.optiontext{
+    margin:10px;
+    color:#e0e0e0;
+}
+.optiontext:hover{
+    color:#fff;
+}
+.arrowright{
+    margin:12px;
+    color:#e0e0e0;
+}
+.arrowright:hover{
+    color:#fff;
+}
+.logout{
+    width:200px;
+    background-color:orange;
+    display:flex;
+    flex-direction:row;
+    border-radius:8px;
+    justify-content:center;
+    position:fixed;
+    bottom:10px;
+    left:20px;
+}
+.logouttext{
+    margin:10px;
+    color:#e0e0e0;
+}
