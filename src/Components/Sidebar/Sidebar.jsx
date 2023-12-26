@@ -9,10 +9,12 @@ import {SlSettings} from "react-icons/sl";
 import {RiFocus2Line} from "react-icons/ri";
 import {GoChevronRight} from "react-icons/go";
 import {IoIosLogOut} from "react-icons/io";
+import {useNavigate} from 'react-router-dom';
+
+
 
 const Sidebar = () => {
-  const catlog = ["Products","Categories","Coupons"];
-  const onlineStore = ["view Store","Store Customization"];
+  const navigate =useNavigate();
   return (
     <div className={style.sidebarcontainer}>
         <div className={style.top}>
@@ -28,19 +30,24 @@ const Sidebar = () => {
             <div className={style.optionicon}>
             <RxDashboard fontSize={20}/>
             </div>
-            <span className={style.optiontext}>Dashboard</span>
+         
+            <span className={style.optiontext} onClick={()=>navigate("/")}>Dashboard</span>
+
         </div>
 
         <div  className={style.optiondashboard}>
         <div className={style.optionicon}>
         <GiTwirlyFlower fontSize={20}/>
         </div>
-        <span className={style.optiontext}>Catlogs</span>
-        <div className={style.arrowright}>
-        <GoChevronRight/>
-        </div>
+        <span className={style.optiontext}  onClick={()=>navigate("/categories")}>Categories</span>
         </div>
 
+        <div className={style.optiondashboard}>
+            <div className={style.optionicon}>
+            <RxDashboard fontSize={20}/>
+            </div>
+            <span className={style.optiontext} onClick={()=>navigate("/createproduct")}>CreateProduct</span>
+        </div>
 
         <div className={style.optiondashboard}>
             <div className={style.optionicon}>
@@ -49,33 +56,32 @@ const Sidebar = () => {
             <span className={style.optiontext}>Product</span>
         </div>
 
-
         <div className={style.optiondashboard}>
             <div className={style.optionicon}>
             <BsFillPeopleFill  fontSize={20}/>
             </div>
-            <span className={style.optiontext}>Customers</span>
+            <span className={style.optiontext}  onClick={()=>navigate("/customers")}>Customers</span>
         </div>
+
         <div className={style.optiondashboard}>
         <div className={style.optionicon}>
             <CiShoppingCart fontSize={20}/>
             </div>
             <span className={style.optiontext}>Orders</span>
         </div>
+
         <div className={style.optiondashboard}>
         <div className={style.optionicon}>
             <SlSettings fontSize={20}/>
             </div>
             <span className={style.optiontext}>Settings</span>
         </div>
+
         <div className={style.optiondashboard}>
         <div className={style.optionicon}>
             <RiFocus2Line fontSize={20}/>
             </div>
             <span className={style.optiontext}>Online Store</span>
-            <div className={style.arrowright}>
-        <GoChevronRight/>
-        </div>
         </div>
 
       <div className={style.logout}>

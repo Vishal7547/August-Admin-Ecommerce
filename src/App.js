@@ -1,8 +1,19 @@
-import Sidebar from "./Components/Sidebar/Sidebar";
+import Dashboard from "./Pages/Dashboard";
+import {BrowserRouter,Routes,Route} from "react-router-dom";
+import Categories from "./Pages/Categories";
+import CreateProduct from "./Pages/CreateProduct";
+import Customers from "./Pages/Customers";
 function App() {
   return (
     <div className="App">
-    <Sidebar/>
+    <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Dashboard/>}/>
+      <Route path="/categories" element={<Categories/>}/>
+      <Route path="/createproduct" element={<CreateProduct/>}/>
+      <Route path="/customers" element={<Customers/>}/>
+    </Routes>
+    </BrowserRouter>
     </div>
   );
 }
@@ -10,10 +21,3 @@ function App() {
 export default App;
 
 
-// echo "# react-admin-ecommerce" >> README.md
-// git init
-// git add README.md
-// git commit -m "first commit"
-// git branch -M main
-// git remote add origin https://github.com/Mansi523/react-admin-ecommerce.git
-// git push -u origin main
