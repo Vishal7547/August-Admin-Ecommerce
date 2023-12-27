@@ -1,4 +1,41 @@
-*{
-    padding:0;
-    margin:0;
+* {
+    padding: 0;
+    margin: 0;
 }
+
+/* css for create category */
+@media screen and (max-width:525px) {
+    .centerAtSmallDevice {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* css for categories */
+@media screen and (max-width:525px) {
+    .atSmallW100 {
+        width: 100% !important;
+    }
+}
+
+/* css for product page */
+/* @media screen and (max-width:823px) {
+    .centerAtSmallDeviceProduct {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+
+}
+
+@media screen and (max-width:667px) {
+    .atSmallHide {
+        width: 100%;
+        overflow: scroll;
+        margin: auto !important;
+    }
+
+} */

@@ -1,23 +1,23 @@
-import React from 'react';
-import Sidebar from '../Components/Sidebar/Sidebar';
-import { useSelector,useDispatch } from 'react-redux';
-import { useState} from 'react';
+import React from "react";
+import Sidebar from "../Components/Sidebar/Sidebar";
+import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
 import { Select } from "antd";
-import {addProduct} from '../Redux/productReducer';
+import { addProduct } from "../Redux/productReducer";
 const { Option } = Select;
 const CreateProduct = () => {
-    const dispatch = useDispatch();
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [price, setPrice] = useState("");
-    const [categoriesName, setCategoriesName] = useState("");
-    const [quantity, setQuantity] = useState("");
-    const [shipping, setShipping] = useState("");
-    const [photo, setPhoto] = useState("");
-    const [imagePreview,setImagePreview] = useState("");
-    const {category} = useSelector((state)=>state.categoryreducer);
-// function for creating product
-  const handleCreate = ()=>{
+  const dispatch = useDispatch();
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [categoriesName, setCategoriesName] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [shipping, setShipping] = useState("");
+  const [photo, setPhoto] = useState("");
+  const [imagePreview, setImagePreview] = useState("");
+  const { category } = useSelector((state) => state.categoryreducer);
+  // function for creating product
+  const handleCreate = () => {
     const product = {
       name,
       description,
@@ -26,7 +26,7 @@ const CreateProduct = () => {
       quantity,
       shipping,
       photo,
-    }
+    };
     dispatch(addProduct(product));
     setName("");
     setDescription("");
@@ -36,27 +36,29 @@ const CreateProduct = () => {
     setShipping("");
     setPhoto("");
     setImagePreview("");
-  }
-//  function for setting the photo
- const handlePhoto = (e)=>{
-const file = e.target.files[0];
-if(file){
-  if(file.size>(1024*1024)*2){
-    alert("plz chose a photo less than 2mb");
-    return;
-  }else{
-    setPhoto(file);
-    setImagePreview(URL.createObjectURL(file));
-  }
-}
- }
+  };
+  //  function for setting the photo
+  const handlePhoto = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 1024 * 1024 * 2) {
+        alert("plz chose a photo less than 2mb");
+        return;
+      } else {
+        setPhoto(file);
+        setImagePreview(URL.createObjectURL(file));
+      }
+    }
+  };
 
   return (
     <div>
-            <div className="container-fluid ">
-            <div className="row" >
-              <div className="col-md-3 m-0 p-0"><Sidebar/></div>
-              <div className="col-md-9">
+      <div className="container-fluid ">
+        <div className="row">
+          <div className="col-2 m-0 p-0">
+            <Sidebar />
+          </div>
+          <div className="col-10  centerAtSmallDevice ">
             <h1>Create Product</h1>
             <div className="m-1 w-75">
               <Select
@@ -66,7 +68,7 @@ if(file){
                 showSearch
                 className="form-select mb-3"
                 onChange={(value) => {
-                    setCategoriesName(value);
+                  setCategoriesName(value);
                 }}
               >
                 {category?.map((c) => (
@@ -74,7 +76,6 @@ if(file){
                     {c.category}
                   </Option>
                 ))}
-              
               </Select>
               <div className="mb-3">
                 <label className="btn btn-outline-secondary col-md-12">
@@ -159,10 +160,10 @@ if(file){
               </div>
             </div>
           </div>
-            </div>
         </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default CreateProduct
+export default CreateProduct;
