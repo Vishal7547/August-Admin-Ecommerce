@@ -1,12 +1,14 @@
 import React from 'react';
 import Sidebar from '../Components/Sidebar/Sidebar';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import { useState,useEffect } from 'react';
 import { Select } from "antd";
 import { useNavigate } from "react-router-dom";
+import {addProduct} from '../Redux/productReducer';
 const { Option } = Select;
 const CreateProduct = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [categories, setCategories] = useState([]);
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -15,12 +17,34 @@ const CreateProduct = () => {
     const [quantity, setQuantity] = useState("");
     const [shipping, setShipping] = useState("");
     const [photo, setPhoto] = useState("");
+    const [imagePreview,setImagePreview] = useState("");
     const {category} = useSelector((state)=>state.categoryreducer);
-
-    console.log("category",category);
+// function for creating product
   const handleCreate = ()=>{
-
+    const product = {
+      name,
+      description,
+      price,
+      categoriesName,
+      quantity,
+      shipping,
+      photo,
+    }
+    dispatch(addProduct(product));
   }
+//  function for setting the photo
+ const handlePhoto = (e)=>{
+const file = e.target.files[0];
+if(file){
+  if(file.size>(1024*1024)*2){
+    alert("plz chose a photo less than 2mb");
+    return;
+  }else{
+    setPhoto(file);
+    setImagePreview(URL.createObjectURL(file));
+  }
+}
+ }
 
   return (
     <div>
@@ -54,7 +78,7 @@ const CreateProduct = () => {
                     type="file"
                     name="photo"
                     accept="image/*"
-                    onChange={(e) => setPhoto(e.target.files[0])}
+                    onChange={handlePhoto}
                     hidden
                   />
                 </label>
@@ -63,7 +87,7 @@ const CreateProduct = () => {
                 {photo && (
                   <div className="text-center">
                     <img
-                      src={URL.createObjectURL(photo)}
+                      src={imagePreview}
                       alt="product_photo"
                       height={"200px"}
                       className="img img-responsive"
