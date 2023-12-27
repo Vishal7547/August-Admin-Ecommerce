@@ -1,17 +1,29 @@
 import {createSlice,createAsyncThunk} from "@reduxjs/toolkit";
 import { db } from "../Firebase";
 import { addDoc,collection } from "firebase/firestore";
-import { ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes,getDownloadURL  } from "firebase/storage";
 import { storage } from "../Firebase";
 export const addProduct = createAsyncThunk("product/addProduct",async(p)=>{
     try {
         // firebase storage method for uploading photos
-const storageRef = ref(storage, `images ${Date.now()}`);
+    const imgId = "images 1703669862149";
+const storageRef = ref(storage,imgId);
 
 // 'file' comes from the Blob or File API
-uploadBytes(storageRef, p.photo).then((snapshot) => {
+ await uploadBytes(storageRef, p.photo).then((snapshot) => {
   console.log('Uploaded a blob or file!');
 });
+
+// get photos url from storage
+
+  const url = await getDownloadURL(storageRef);
+  console.log(url);
+
+const photo = {
+  id:imgId,
+  url,
+}
+
         const docRef = await addDoc(collection(db, "product"), {
         name:p.name,
         description:p.description,
@@ -19,14 +31,13 @@ uploadBytes(storageRef, p.photo).then((snapshot) => {
         categoriesName:p.categoriesName,
         quantity:p.quantity,
         shipping:p.shipping,
-        photo:p.photo,
+        photo,
           });
-           const category = {
-            category:c,
-            id:docRef.id,
+           const product = {
+             ...p,photo,
+             id:docRef.id,
            }
-           console.log("check",c);
-           return category;
+           return product;
       }catch(e){
         throw new Error(e);
       }

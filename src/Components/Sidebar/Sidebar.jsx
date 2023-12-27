@@ -7,7 +7,6 @@ import {BsFillPeopleFill} from "react-icons/bs";
 import {CiShoppingCart} from "react-icons/ci";
 import {SlSettings} from "react-icons/sl";
 import {RiFocus2Line} from "react-icons/ri";
-import {GoChevronRight} from "react-icons/go";
 import {IoIosLogOut} from "react-icons/io";
 import {useNavigate} from 'react-router-dom';
 
@@ -53,14 +52,14 @@ const Sidebar = () => {
             <div className={style.optionicon}>
             <RxDashboard fontSize={20}/>
             </div>
-            <span className={style.optiontext}>Product</span>
+            <span className={style.optiontext} onClick={()=>navigate("/product")}>Product</span>
         </div>
 
         <div className={style.optiondashboard}>
             <div className={style.optionicon}>
             <BsFillPeopleFill  fontSize={20}/>
             </div>
-            <span className={style.optiontext}  onClick={()=>navigate("/customers")}>Customers</span>
+            <span className={style.optiontext} onClick={()=>navigate("/customers")}>Customers</span>
         </div>
 
         <div className={style.optiondashboard}>

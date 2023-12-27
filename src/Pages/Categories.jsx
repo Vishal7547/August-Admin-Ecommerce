@@ -1,20 +1,17 @@
 import React from 'react'
 import Sidebar from '../Components/Sidebar/Sidebar';
 import CategoryForm from '../Components/Form/CategoryForm';
-import {useState,useEffect} from "react";
+import {useState} from "react";
 import {useDispatch,useSelector} from "react-redux"; 
-import { addCategory,fetchCategory,deleteCategory} from '../Redux/categoryReducer';
+import { addCategory,deleteCategory} from '../Redux/categoryReducer';
 import toast from 'react-hot-toast';
 const Categories = () => {
-    let categories = [1,2,3,4];
     const [name,setName] = useState("");
     const [update,setUpdate] = useState(null);
     const dispatch = useDispatch();
     const {category} = useSelector((state)=>state.categoryreducer);
 
-     useEffect(()=>{
-       dispatch(fetchCategory());
-     },[dispatch])
+
     
      const handleSubmit = (e)=>{
       e.preventDefault();

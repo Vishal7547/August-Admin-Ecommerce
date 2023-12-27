@@ -1,15 +1,12 @@
 import React from 'react';
 import Sidebar from '../Components/Sidebar/Sidebar';
 import { useSelector,useDispatch } from 'react-redux';
-import { useState,useEffect } from 'react';
+import { useState} from 'react';
 import { Select } from "antd";
-import { useNavigate } from "react-router-dom";
 import {addProduct} from '../Redux/productReducer';
 const { Option } = Select;
 const CreateProduct = () => {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [categories, setCategories] = useState([]);
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
@@ -31,6 +28,14 @@ const CreateProduct = () => {
       photo,
     }
     dispatch(addProduct(product));
+    setName("");
+    setDescription("");
+    setPrice("");
+    setCategoriesName("");
+    setQuantity("");
+    setShipping("");
+    setPhoto("");
+    setImagePreview("");
   }
 //  function for setting the photo
  const handlePhoto = (e)=>{
