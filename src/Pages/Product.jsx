@@ -1,9 +1,18 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import { FaEye } from "react-icons/fa6";
 import { MdEdit } from "react-icons/md";
 import { AiFillDelete } from "react-icons/ai";
+import { useSelector,useDispatch} from "react-redux";
+import { deleteProduct } from "../Redux/productReducer";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../Firebase";
 const Product = () => {
+  const [category,categoryName] = useState();
+  const dispatch = useDispatch();
+  const { product } = useSelector((state) => state.productreducer);
+  
+
   return (
     <div>
       <div className="container-fluid ">
@@ -28,15 +37,16 @@ const Product = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {[1, 2, 3, 4]?.map((u, i) => {
+                    {product?.map((u, i) => {
                       return (
                         <tr>
                           <th scope="row">{u.name}</th>
-                          <td>{u.email}</td>
-                          <td>55</td>
-                          <td>3</td>
-                          <td>10,000</td>
-                          <td>10,000</td>
+                          <td>{u.price}</td>
+                          <td>{u.description}</td>
+                          <td>{u.shipping}</td>
+                          <td>{u.categoriesName.category}</td>
+                          <td>{u.quantity}</td>
+                     
                           <td>
                             <span>
                               <FaEye />
@@ -44,7 +54,7 @@ const Product = () => {
                             <span className="mx-2">
                               <MdEdit />
                             </span>
-                            <span>
+                            <span  onClick={()=>dispatch(deleteProduct(u))}>
                               <AiFillDelete />
                             </span>
                           </td>

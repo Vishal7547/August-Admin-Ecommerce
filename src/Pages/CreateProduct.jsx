@@ -10,7 +10,7 @@ const CreateProduct = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  const [categoriesName, setCategoriesName] = useState("");
+  const [categoriesName, setCategoriesName] = useState({});
   const [quantity, setQuantity] = useState("");
   const [shipping, setShipping] = useState("");
   const [photo, setPhoto] = useState("");
@@ -68,14 +68,14 @@ const CreateProduct = () => {
                 showSearch
                 className="form-select mb-3"
                 onChange={(value) => {
-                  setCategoriesName(value);
+                  setCategoriesName(JSON.parse(value));
                 }}
               >
-                {category?.map((c) => (
-                  <Option key={c.id} value={c.id}>
-                    {c.category}
-                  </Option>
-                ))}
+             {category?.map((c) => (
+  <Option key={c.id} value={JSON.stringify(c)}>
+    {c.category}
+  </Option>
+))}
               </Select>
               <div className="mb-3">
                 <label className="btn btn-outline-secondary col-md-12">

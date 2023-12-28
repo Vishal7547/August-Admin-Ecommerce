@@ -1,12 +1,14 @@
 import {createSlice,createAsyncThunk} from "@reduxjs/toolkit";
 import { db } from "../Firebase";
-import { addDoc,collection } from "firebase/firestore";
-import { ref, uploadBytes,getDownloadURL  } from "firebase/storage";
+import { addDoc,collection,onSnapshot,deleteDoc,doc} from "firebase/firestore";
+import { ref, uploadBytes,getDownloadURL,deleteObject  } from "firebase/storage";
 import { storage } from "../Firebase";
+
+// function for adding product
 export const addProduct = createAsyncThunk("product/addProduct",async(p)=>{
     try {
         // firebase storage method for uploading photos
-    const imgId = "images 1703669862149";
+    const imgId = `image${Date.now()}`;
 const storageRef = ref(storage,imgId);
 
 // 'file' comes from the Blob or File API
@@ -43,6 +45,58 @@ const photo = {
       }
 })
 
+// funtion for fetching data from the product
+
+export const fetchProduct = createAsyncThunk("category/fetchProduct",async()=>{
+  try {
+
+    const product= await new Promise((resolve, reject) => {
+      const unsubscribe = onSnapshot(collection(db, "product"), (snapshot) => {
+        const data = snapshot.docs.map((doc)=>{
+          return {
+            ...doc.data(),
+            id:doc.id,
+          }
+        })
+        resolve(data);
+      });
+
+    });
+   return product;
+  }catch(e){
+    throw new Error(e);
+  }
+
+})
+
+// function for deleting product.
+export const deleteProduct = createAsyncThunk("category/deleteProduct",async(p)=>{
+  
+  try {
+   
+    // Create a reference to the file to delete
+    const desertRef = ref(storage, p.photo.id);
+     
+    // Delete the file
+    deleteObject(desertRef).then(() => {
+      // File deleted successfully
+      console.log("file is deleted");
+      
+    }).catch((error) => {
+      // Uh-oh, an error occurred!
+
+    console.log(error);
+    });
+    await deleteDoc(doc(db, "product",p.id));
+    
+
+    return p.id;   
+    
+  }catch(e){
+    throw new Error(e);
+  }
+
+})
 
 const initialState={
     product:[],
@@ -70,6 +124,42 @@ builder.addCase(addProduct.pending,(state,action)=>{
             state.loading=false;
             state.error=true;
             });
+
+// builder function for fetch category
+
+builder.addCase(fetchProduct.pending,(state,action)=>{
+  state.loading=true;
+  state.error=null;
+  });
+  builder.addCase(fetchProduct.fulfilled,(state,action)=>{
+      state.loading=false;
+      state.error=null;
+      state.product=action.payload;
+      });
+      builder.addCase(fetchProduct.rejected,(state,action)=>{
+          state.loading=false;
+          state.error=true;
+          });
+
+// function for deleting product
+
+builder.addCase(deleteProduct.pending,(state,action)=>{
+  state.loading=true;
+  state.error=null;
+  });
+  builder.addCase(deleteProduct.fulfilled,(state,action)=>{
+      state.loading=false;
+      state.error=null;
+      state.product= state.product.filter((c)=>(
+        c.id !== action.payload
+      ))
+      });
+      builder.addCase(deleteProduct.rejected,(state,action)=>{
+          state.loading=false;
+          state.error=true;
+          });
+
+
     }
 })
 

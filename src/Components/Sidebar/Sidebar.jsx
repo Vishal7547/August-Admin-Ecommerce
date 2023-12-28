@@ -1,8 +1,6 @@
 import React from "react";
 import "./sidebar.css";
 import { Link } from "react-router-dom";
-import { PiShoppingCartLight } from "react-icons/pi";
-import { RxDashboard } from "react-icons/rx";
 import { GiTwirlyFlower } from "react-icons/gi";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { CiShoppingCart } from "react-icons/ci";
@@ -11,10 +9,8 @@ import { RiFocus2Line } from "react-icons/ri";
 import { IoIosLogOut } from "react-icons/io";
 import { FaProductHunt, FaRegUser } from "react-icons/fa6";
 import { MdFormatAlignLeft } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
-  const navigate = useNavigate();
 
   return (
     <nav className="nav__cont">
