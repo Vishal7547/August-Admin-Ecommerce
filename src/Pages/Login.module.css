@@ -1,0 +1,90 @@
+.formcontainer{
+    background-color:#202020;
+    height:100vh;
+}
+.formouter{
+    /* border:1px solid black; */
+
+    padding:40px;
+    position:relative;
+
+}
+
+.sideimage{
+    background-image:url("https://images.pexels.com/photos/2740956/pexels-photo-2740956.jpeg?auto=compress&cs=tinysrgb&w=600");
+    background-size:cover;
+    height:600px;
+    width:700px;
+    /* margin:20px !important; */
+}
+.sigin{
+    position:absolute;
+    left:55%;
+    top:25%;
+}
+.emailHeader{
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.emailHeader span{
+    font-size:0.8rem;
+    color:#F77500;
+    margin-top:80px;
+    /* margin-left:20px; */
+    margin-bottom:40px;
+    font-weight:400;
+  font-family: URMacan, -apple-system, blinkmacsystemfont, "Helvetica Neue", helvetica, segoe ui, arial, roboto, "PingFang SC", "miui", "Hiragino Sans GB", "Microsoft Yahei", sans-serif !important;
+
+}
+.emailInput{
+  padding:10px;
+  width:600px;
+  border:none;
+  border: 1px solid #dadada; 
+  border-radius:5px;
+  outline:none;
+  font-family: URMacan, -apple-system, blinkmacsystemfont, "Helvetica Neue", helvetica, segoe ui, arial, roboto, "PingFang SC", "miui", "Hiragino Sans GB", "Microsoft Yahei", sans-serif !important;
+
+}
+.emailInput:hover{
+    border:1px solid black;
+}
+.password{
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.password span{
+    font-size:0.8rem;
+    color:#F77500;
+
+    margin-top:80px;
+    /* margin-left:20px; */
+    margin-bottom:40px;
+    font-weight:400;
+
+  font-family: URMacan, -apple-system, blinkmacsystemfont, "Helvetica Neue", helvetica, segoe ui, arial, roboto, "PingFang SC", "miui", "Hiragino Sans GB", "Microsoft Yahei", sans-serif !important;
+}
+.passwordInput{
+    padding:10px;
+    width:600px;
+    border:none;
+    border: 1px solid #dadada; 
+    border-radius:5px;
+    outline:none;
+    font-family: URMacan, -apple-system, blinkmacsystemfont, "Helvetica Neue", helvetica, segoe ui, arial, roboto, "PingFang SC", "miui", "Hiragino Sans GB", "Microsoft Yahei", sans-serif !important;
+}
+.passwordInput:hover{
+    border:1px solid black;
+}
+.btnlogin{
+    margin-top:40px;
+    margin-left:20px;
+    padding:10px;
+    text-align:center;
+    background-color:#F77500;
+    color:#fff;
+    outline:none;
+    border:none;
+    width:550px;
+    border-radius:4px;
+}
