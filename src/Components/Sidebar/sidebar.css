@@ -35,7 +35,7 @@
     font-family: 'roboto';
 }
 
-.nav__items a {
+.nav__items a,.logout{
     position: relative;
     display: block;
     top: -35px;
@@ -51,7 +51,7 @@
     font-size: 1.1em;
 }
 
-.nav__items a:after {
+.nav__items a:after,.logout:after {
     content: '';
     width: 100%;
     height: 100%;
@@ -65,7 +65,7 @@
     z-index: -10;
 }
 
-.nav__items:hover a:after {
+.nav__items:hover a:after,.logout:after{
     opacity: 1;
 }
 

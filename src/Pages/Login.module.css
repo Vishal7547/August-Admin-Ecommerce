@@ -78,13 +78,13 @@
 }
 .btnlogin{
     margin-top:40px;
-    margin-left:20px;
+    /* margin-left:20px; */
     padding:10px;
     text-align:center;
     background-color:#F77500;
     color:#fff;
     outline:none;
     border:none;
-    width:550px;
+    width:600px;
     border-radius:4px;
 }
