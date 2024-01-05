@@ -2,16 +2,24 @@ import React from 'react';
 import { useContext } from 'react';
 import { userContext } from '../context/MyContext';
 import {useNavigate} from "react-router-dom";
+import Loading from '../Components/Loading';
+
 const Adimroute = ({children}) => {
-const {admin} = useContext(userContext);
+const {admin,onAuthStateChanged,authLoading} = useContext(userContext);
 const navigate =useNavigate();
-if(admin){
-   return children; 
+
+console.log("onAuthStateChanged",authLoading);
+
+if(authLoading){
+    return <Loading/>
 }else{
-
-    window.location.href = '/'
-
+    return children
 }
+// if(admin){
+//    return children; 
+// }else{
+//     window.location.href = '/';
+// }
 }
 
 export default Adimroute
