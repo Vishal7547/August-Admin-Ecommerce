@@ -13,7 +13,7 @@ console.log("onAuthStateChanged",authLoading);
 if(authLoading){
     return <Loading/>
 }else{
-    return children
+    return children;
 }
 // if(admin){
 //    return children; 

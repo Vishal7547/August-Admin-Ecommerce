@@ -11,6 +11,7 @@ import { useEffect ,useContext} from "react";
 import { userContext } from "./context/MyContext";
 import Adimroute from "./Route/Adimroute";
 import Login from "./Pages/Login";
+import Home from "./Pages/Home";
 
 function App() {
   const name = useContext(userContext);
@@ -34,10 +35,11 @@ function App() {
       <Dashboard/>
       </Adimroute>
       }/>
-      <Route path="/categories" element={     <Adimroute><Categories/></Adimroute>}/>
-      <Route path="/createproduct" element={  <Adimroute><CreateProduct/></Adimroute>}/>
+      <Route path="/categories" element={<Adimroute><Categories/></Adimroute>}/>
+      <Route path="/createproduct" element={<Adimroute><CreateProduct/></Adimroute>}/>
       <Route path="/customers" element={<Adimroute><Customers/></Adimroute>}/>
       <Route path="/product" element={<Adimroute><Product/></Adimroute>}/>
+      <Route path="/home" element={<Adimroute><Home/></Adimroute>}/>
       
     </Routes>
     </BrowserRouter>

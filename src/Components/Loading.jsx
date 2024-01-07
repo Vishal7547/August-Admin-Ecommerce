@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
 const Loading = ({ path = "/" }) => {
   const [count, setCount] = useState(3);
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const Loading = ({ path = "/" }) => {
       navigate('/');
     return () => clearInterval(interval);
   }, [count, navigate, path]);
+
   return (
     <>
       <div

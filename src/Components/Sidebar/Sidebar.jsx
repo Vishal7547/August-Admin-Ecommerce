@@ -48,12 +48,17 @@ navigate("/");
         <li className="nav__items">
           <MdFormatAlignLeft fontSize={20} />
 
-          <Link to="/createproduct">Create Category</Link>
+          <Link to="/createproduct">Create Product</Link>
         </li>
         <li className="nav__items">
           <FaProductHunt fontSize={20} />
 
           <Link to="/product">Product</Link>
+        </li>
+        <li className="nav__items">
+          <MdFormatAlignLeft fontSize={20} />
+
+          <Link to="/home">Home Section</Link>
         </li>
         <li className="nav__items">
           <BsFillPeopleFill fontSize={20} />
