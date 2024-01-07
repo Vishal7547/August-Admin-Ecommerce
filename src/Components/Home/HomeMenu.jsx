@@ -25,7 +25,7 @@ const HomeMenu = () => {
             In focus: Dress
           </NavLink>
           <NavLink
-            to="/dashboard/admin/orders"
+            to="/home-banner"
             className="list-group-item list-group-item-action"
           >
             Home Banner text

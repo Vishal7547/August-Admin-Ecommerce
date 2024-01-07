@@ -13,6 +13,7 @@ import Adimroute from "./Route/Adimroute";
 import Login from "./Pages/Login";
 import Home from "./Pages/Home";
 import HomeCategory from "./Pages/HomeCategory";
+import HomeBanner from "./Pages/HomeBanner";
 
 function App() {
   const name = useContext(userContext);
@@ -84,6 +85,14 @@ function App() {
             element={
               <Adimroute>
                 <HomeCategory />
+              </Adimroute>
+            }
+          />
+          <Route
+            path="/home-banner"
+            element={
+              <Adimroute>
+                <HomeBanner />
               </Adimroute>
             }
           />

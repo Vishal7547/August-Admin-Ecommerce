@@ -193,14 +193,13 @@ export const addHeroCategory = createAsyncThunk(
       console.log(url);
 
       const category = {
-       imgId,
+        imgId,
         url,
         ...p.categoriesName,
       };
 
       const washingtonRef = doc(db, "home", "jsdfhdsffoidgjdsgoi");
-       await updateDoc(washingtonRef, {
-      
+      await updateDoc(washingtonRef, {
         categories: arrayUnion(category),
       });
       const home = {
@@ -220,25 +219,25 @@ export const deleteHomeCategory = createAsyncThunk(
   async (p) => {
     try {
       // Create a reference to the file to delete
-      // const desertRef = ref(storage,p.imgId);
+      const desertRef = ref(storage, p.imgId);
 
-      // // Delete the file
-      // deleteObject(desertRef)
-      //   .then(() => {
-      //     // File deleted successfully
-      //     console.log("file is deleted");
-      //   })
-      //   .catch((error) => {
-      //     // Uh-oh, an error occurred!
+      // Delete the file
+      deleteObject(desertRef)
+        .then(() => {
+          // File deleted successfully
+          console.log("file is deleted");
+        })
+        .catch((error) => {
+          // Uh-oh, an error occurred!
 
-      //     console.log(error);
-      //   });
-        const washingtonRef = doc(db, "home", "jsdfhdsffoidgjdsgoi");
-        await updateDoc(washingtonRef, {
-          regions: arrayRemove(p)
+          console.log(error);
+        });
+      const washingtonRef = doc(db, "home", "jsdfhdsffoidgjdsgoi");
+      await updateDoc(washingtonRef, {
+        categories: arrayRemove(p),
       });
-      
-      // return p.id;
+
+      return p.id;
     } catch (e) {
       throw new Error(e);
     }
@@ -247,11 +246,12 @@ export const deleteHomeCategory = createAsyncThunk(
 
 const initialState = {
   home: {
-    categories:[],
+    categories: [],
   },
   error: null,
   loading: false,
   categoryLoading: false,
+  categoryDelete: false,
 };
 
 const homeSlice = createSlice({
@@ -312,15 +312,34 @@ const homeSlice = createSlice({
     builder.addCase(addHeroCategory.fulfilled, (state, action) => {
       state.categoryLoading = false;
       state.error = null;
-      state.home = { ...state.home,id:action.payload.id,categories:[...state?.home?.categories,action.payload.category]};
+      state.home = {
+        ...state.home,
+        id: action.payload.id,
+        categories: [...state?.home?.categories, action.payload.category],
+      };
     });
     builder.addCase(addHeroCategory.rejected, (state, action) => {
       state.categoryLoading = false;
       state.error = true;
     });
 
+    // function for deleting category of home section
 
-
+    builder.addCase(deleteHomeCategory.pending, (state, action) => {
+      state.categoryDelete = true;
+      state.error = null;
+    });
+    builder.addCase(deleteHomeCategory.fulfilled, (state, action) => {
+      state.categoryDelete = false;
+      state.error = null;
+      state.home.categories = state?.home?.categories.filter(
+        (c) => c.id !== action.payload
+      );
+    });
+    builder.addCase(deleteHomeCategory.rejected, (state, action) => {
+      state.categoryDelete = false;
+      state.error = true;
+    });
   },
 });
 
