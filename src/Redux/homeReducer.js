@@ -7,6 +7,8 @@ import {
   deleteDoc,
   doc,
   setDoc,
+  updateDoc,
+  arrayUnion,
 } from "firebase/firestore";
 import {
   ref,
@@ -93,9 +95,11 @@ export const addherovideo = createAsyncThunk("home/addherovideo", async (v) => {
   }
 });
 
+// delete photo from storage
 export const deletehomeimage = createAsyncThunk(
   "home/deletehomeimage",
   async (p) => {
+    console.log(p);
     try {
       // Create a reference to the file to delete
       const desertRef = ref(storage, p.photo.id);
@@ -117,10 +121,103 @@ export const deletehomeimage = createAsyncThunk(
   }
 );
 
+// delete photo from storage
+export const deletehomeVideo = createAsyncThunk(
+  "home/deletehomeVideo",
+  async (v) => {
+    try {
+      // Create a reference to the file to delete
+      const desertRef = ref(storage, v.video.id);
+
+      // Delete the file
+      deleteObject(desertRef)
+        .then(() => {
+          // File deleted successfully
+          console.log("previous video is deleted");
+        })
+        .catch((error) => {
+          // Uh-oh, an error occurred!
+
+          console.log(error);
+        });
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+);
+
+// funtion for fetching data from the home collection
+export const fetchHomeCollection = createAsyncThunk(
+  "home/fetchHomeCollection",
+  async () => {
+    try {
+      const home = await new Promise((resolve, reject) => {
+        const unsubscribe = onSnapshot(
+          doc(db, "home", "jsdfhdsffoidgjdsgoi"),
+          (doc) => {
+            // console.log({ ...doc.data(), id: doc.id });
+            const data = {
+              ...doc.data(),
+              id: doc.id,
+            };
+            resolve(data);
+          }
+        );
+      });
+      // console.log("/*", home);
+      return home;
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+);
+
+// function for uploading images of category section for home page
+export const addHeroCategory = createAsyncThunk(
+  "home/addHeroCategory",
+  async (p) => {
+    try {
+      // firebase storage method for uploading photos
+      const imgId = `image${Date.now()}`;
+      const storageRef = ref(storage, imgId);
+
+      // 'file' comes from the Blob or File API
+      await uploadBytes(storageRef, p.photo).then((snapshot) => {
+        console.log("Uploaded a blob or file!");
+      });
+
+      // get photos url from storage
+
+      const url = await getDownloadURL(storageRef);
+      console.log(url);
+
+      const category = {
+        id: imgId,
+        url,
+        ...p.categoriesName,
+      };
+
+      const washingtonRef = (db, "home", "jsdfhdsffoidgjdsgoi");
+      await updateDoc(washingtonRef, {
+        categories: arrayUnion(category),
+      });
+
+      // const home = {
+      //   category,
+      //   id: "jsdfhdsffoidgjdsgoi",
+      // };
+      // return home;
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+);
+
 const initialState = {
   home: {},
   error: null,
   loading: false,
+  categoryLoading: false,
 };
 
 const homeSlice = createSlice({
@@ -154,6 +251,37 @@ const homeSlice = createSlice({
     });
     builder.addCase(addherovideo.rejected, (state, action) => {
       state.loading = false;
+      state.error = true;
+    });
+
+    // builder function for fetch homeCollection
+
+    builder.addCase(fetchHomeCollection.pending, (state, action) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(fetchHomeCollection.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+      state.home = action.payload;
+    });
+    builder.addCase(fetchHomeCollection.rejected, (state, action) => {
+      state.loading = false;
+      state.error = true;
+    });
+
+    // builder for home category section
+    builder.addCase(addHeroCategory.pending, (state, action) => {
+      state.categoryLoading = true;
+      state.error = null;
+    });
+    builder.addCase(addHeroCategory.fulfilled, (state, action) => {
+      state.categoryLoading = false;
+      state.error = null;
+      state.home = { ...state.home, ...action.payload };
+    });
+    builder.addCase(addHeroCategory.rejected, (state, action) => {
+      state.categoryLoading = false;
       state.error = true;
     });
   },
