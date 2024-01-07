@@ -2,7 +2,7 @@ import React from "react";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import HomeMenu from "../Components/Home/HomeMenu";
 import { useState } from "react";
-import { addhero,addherovideo} from "../Redux/homeReducer";
+import { addhero,addherovideo,deletehomeimage} from "../Redux/homeReducer";
 import { useDispatch,useSelector } from "react-redux";
 
 const Home = () => {
@@ -15,10 +15,13 @@ const Home = () => {
 console.log("home data",home);
       // function for adding content to the home page
   const handleCreate = () => {
-    const home = {
+   if(home?.photo?.url){
+        dispatch(deletehomeimage(home));
+     }
+    const homes = {
       photo,
     };
-    dispatch(addhero(home));
+    dispatch(addhero(homes));
     setPhoto("");
     setImagePreview("");
   };
