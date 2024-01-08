@@ -9,6 +9,7 @@ import {
   setDoc,
   updateDoc,
   arrayUnion,
+  arrayRemove,
 } from "firebase/firestore";
 import {
   ref,
@@ -192,21 +193,52 @@ export const addHeroCategory = createAsyncThunk(
       console.log(url);
 
       const category = {
-        id: imgId,
+       imgId,
         url,
         ...p.categoriesName,
       };
 
-      const washingtonRef = (db, "home", "jsdfhdsffoidgjdsgoi");
-      await updateDoc(washingtonRef, {
+      const washingtonRef = doc(db, "home", "jsdfhdsffoidgjdsgoi");
+       await updateDoc(washingtonRef, {
+      
         categories: arrayUnion(category),
       });
+      const home = {
+        category,
+        id: "jsdfhdsffoidgjdsgoi",
+      };
+      return home;
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+);
 
-      // const home = {
-      //   category,
-      //   id: "jsdfhdsffoidgjdsgoi",
-      // };
-      // return home;
+// function for deleting home category images.
+export const deleteHomeCategory = createAsyncThunk(
+  "home/deleteHomeCategory",
+  async (p) => {
+    try {
+      // Create a reference to the file to delete
+      // const desertRef = ref(storage,p.imgId);
+
+      // // Delete the file
+      // deleteObject(desertRef)
+      //   .then(() => {
+      //     // File deleted successfully
+      //     console.log("file is deleted");
+      //   })
+      //   .catch((error) => {
+      //     // Uh-oh, an error occurred!
+
+      //     console.log(error);
+      //   });
+        const washingtonRef = doc(db, "home", "jsdfhdsffoidgjdsgoi");
+        await updateDoc(washingtonRef, {
+          regions: arrayRemove(p)
+      });
+      
+      // return p.id;
     } catch (e) {
       throw new Error(e);
     }
@@ -214,7 +246,9 @@ export const addHeroCategory = createAsyncThunk(
 );
 
 const initialState = {
-  home: {},
+  home: {
+    categories:[],
+  },
   error: null,
   loading: false,
   categoryLoading: false,
@@ -278,12 +312,15 @@ const homeSlice = createSlice({
     builder.addCase(addHeroCategory.fulfilled, (state, action) => {
       state.categoryLoading = false;
       state.error = null;
-      state.home = { ...state.home, ...action.payload };
+      state.home = { ...state.home,id:action.payload.id,categories:[...state?.home?.categories,action.payload.category]};
     });
     builder.addCase(addHeroCategory.rejected, (state, action) => {
       state.categoryLoading = false;
       state.error = true;
     });
+
+
+
   },
 });
 

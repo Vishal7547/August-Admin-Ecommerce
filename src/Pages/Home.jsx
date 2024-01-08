@@ -182,7 +182,7 @@ const Home = () => {
                       </div>
                     </div>
                   </div>
-                  {Object.keys(home).length && (
+                  {home?.photo?.url && (
                     <div className="row">
                       <div className="col-md-6">
                         <img
