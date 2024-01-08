@@ -15,6 +15,7 @@ import Home from "./Pages/Home";
 import HomeCategory from "./Pages/HomeCategory";
 import HomeBanner from "./Pages/HomeBanner";
 import HomeEveryMood from "./Pages/HomeEveryMood";
+import HomeInFocus from "./Pages/HomeInFocus";
 
 function App() {
   const name = useContext(userContext);
@@ -113,6 +114,16 @@ function App() {
               </Adimroute>
             }
           />
+
+<Route
+            path="/in-focus"
+            element={
+              <Adimroute>
+                <HomeInFocus/>
+              </Adimroute>
+            }
+          />
+
         </Routes>
       </BrowserRouter>
     </div>
