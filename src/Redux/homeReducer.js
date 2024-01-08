@@ -315,6 +315,29 @@ export const deleteYourEveryMood = createAsyncThunk(
   }
 );
 
+// function for adding banner text .
+export const addBanner = createAsyncThunk(
+  "home/addBanner",
+  async (bannerName) => {
+    try {
+      setDoc(
+        doc(db, "home", "jsdfhdsffoidgjdsgoi"),
+        {
+          bannerName,
+        },
+        { merge: true }
+      );
+      const home = {
+        bannerName,
+        id: "jsdfhdsffoidgjdsgoi",
+      };
+      return home;
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+);
+
 const initialState = {
   home: {
     categories: [],
@@ -326,6 +349,7 @@ const initialState = {
   categoryDelete: false,
   everyMoodLoading: false,
   everyMoodDeleteLoading:false,
+  bannerLoading: false,
 };
 
 const homeSlice = createSlice({
@@ -451,6 +475,21 @@ const homeSlice = createSlice({
       state.everyMoodDeleteLoading = false;
       state.error = true;
     });
+
+// buider function for banner .
+builder.addCase(addBanner.pending, (state, action) => {
+  state.bannerLoading = true;
+  state.error = null;
+});
+builder.addCase(addBanner.fulfilled, (state, action) => {
+  state.bannerLoading = false;
+  state.error = null;
+  state.home = { ...state.home, ...action.payload };
+});
+builder.addCase(addBanner.rejected, (state, action) => {
+  state.bannerLoading = false;
+  state.error = true;
+});
 
 
 

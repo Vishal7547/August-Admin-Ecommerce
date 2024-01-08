@@ -105,6 +105,14 @@ function App() {
               </Adimroute>
             }
           />
+                              <Route
+            path="/home-banner"
+            element={
+              <Adimroute>
+                <HomeBanner/>
+              </Adimroute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </div>
