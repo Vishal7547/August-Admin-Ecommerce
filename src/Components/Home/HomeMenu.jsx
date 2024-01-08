@@ -38,7 +38,7 @@ const HomeMenu = () => {
           </NavLink>
 
           <NavLink
-            to="/dashboard/admin/orders"
+            to="/home-your-every-mood"
             className="list-group-item list-group-item-action"
           >
             your every mood

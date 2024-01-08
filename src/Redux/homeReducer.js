@@ -244,14 +244,88 @@ export const deleteHomeCategory = createAsyncThunk(
   }
 );
 
+// function for uploading images of Your Every Mood  for home page
+export const addYourEveryMood = createAsyncThunk(
+  "home/addYourEveryMood",
+  async (p) => {
+    try {
+      // firebase storage method for uploading photos
+      const imgId = `image${Date.now()}`;
+      const storageRef = ref(storage, imgId);
+
+      // 'file' comes from the Blob or File API
+      await uploadBytes(storageRef, p.photo).then((snapshot) => {
+        console.log("Uploaded a blob or file!");
+      });
+
+      // get photos url from storage
+
+      const url = await getDownloadURL(storageRef);
+      console.log(url);
+
+      const yourMood = {
+        imgId,
+        url,
+        ...p.categoriesName,
+      };
+
+      const washingtonRef = doc(db, "home", "jsdfhdsffoidgjdsgoi");
+      await updateDoc(washingtonRef, {
+        yourEveryMood: arrayUnion(yourMood),
+      });
+      const home = {
+        yourMood,
+        id:"jsdfhdsffoidgjdsgoi",
+      };
+      return home;
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+);
+
+// // function for deleting images of Your Every Mood.
+export const deleteYourEveryMood = createAsyncThunk(
+  "home/deleteYourEveryMood",
+  async (p) => {
+    try {
+      // Create a reference to the file to delete
+      const desertRef = ref(storage, p.imgId);
+
+      // Delete the file
+      deleteObject(desertRef)
+        .then(() => {
+          // File deleted successfully
+          console.log("file is deleted");
+        })
+        .catch((error) => {
+          // Uh-oh, an error occurred!
+
+          console.log(error);
+        });
+      const washingtonRef = doc(db, "home", "jsdfhdsffoidgjdsgoi");
+      await updateDoc(washingtonRef, {
+        yourEveryMood: arrayRemove(p),
+      });
+
+      return p.id;
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+);
+
 const initialState = {
   home: {
     categories: [],
+    yourEveryMood:[],
   },
   error: null,
   loading: false,
   categoryLoading: false,
   categoryDelete: false,
+  everyMoodLoading: false,
+  everyMoodDeleteLoading:false,
 };
 
 const homeSlice = createSlice({
@@ -340,6 +414,46 @@ const homeSlice = createSlice({
       state.categoryDelete = false;
       state.error = true;
     });
+
+    // builder for home your every mood section
+    builder.addCase(addYourEveryMood.pending, (state, action) => {
+      state.everyMoodLoading = true;
+      state.error = null;
+    });
+    builder.addCase(addYourEveryMood.fulfilled, (state, action) => {
+      state.everyMoodLoading = false;
+      state.error = null;
+      state.home = {
+        ...state.home,
+        id: action.payload.id,
+        yourEveryMood: [...state?.home?.yourEveryMood, action.payload.yourMood],
+      };
+    });
+    builder.addCase(addYourEveryMood.rejected, (state, action) => {
+      state.everyMoodLoading = false;
+      state.error = true;
+    });
+
+    // function for deleting your every mood section
+
+    builder.addCase(deleteYourEveryMood.pending, (state, action) => {
+      state.everyMoodDeleteLoading = true;
+      state.error = null;
+    });
+    builder.addCase(deleteYourEveryMood.fulfilled, (state, action) => {
+      state.everyMoodDeleteLoading = false;
+      state.error = null;
+      state.home.yourEveryMood= state?.home?.yourEveryMood.filter(
+        (c) => c.id !== action.payload
+      );
+    });
+    builder.addCase(deleteYourEveryMood.rejected, (state, action) => {
+      state.everyMoodDeleteLoading = false;
+      state.error = true;
+    });
+
+
+
   },
 });
 
