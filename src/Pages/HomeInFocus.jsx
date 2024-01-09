@@ -4,7 +4,7 @@ import HomeMenu from "../Components/Home/HomeMenu";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { Select } from "antd";
-import { addYourEveryMood,fetchHomeCollection,deleteYourEveryMood} from "../Redux/homeReducer";
+import {fetchHomeCollection,addInFocusImage,deletehomeInFocusImage,addInFocusVideo,deletehomeInFocusVideo} from "../Redux/homeReducer";
 const { Option } = Select;
 const HomeInFocus = () => {
     const dispatch = useDispatch();
@@ -15,24 +15,27 @@ const HomeInFocus = () => {
     const [Video, setVideo] = useState("");
     const [VideoPreview, setVideoPreview] = useState("");
     const { category } = useSelector((state) => state.categoryreducer);
-    const {everyMoodLoading, home, error,everyMoodDeleteLoading } = useSelector(
+    const {everyMoodLoading, home, error,everyMoodDeleteLoading,inFocusLoader,inFocusVideoLoader} = useSelector(
       (state) => state.homereducer
     );
     useEffect(() => {
       dispatch(fetchHomeCollection());
     }, [dispatch]);
     console.log("{}{}", home);
+
     // function for creating category
     const handleCreate = () => {
         if(photo === ""){
             console.log("plz upload a photo");
             return;
           }
+          dispatch(deletehomeInFocusImage(home.inFocusPhoto.imgId));
       const categoryHome = {
-        categoriesName,
+        ...categoriesName,
         photo,
       };
-    //   dispatch(addYourEveryMood(categoryHome));
+      console.log("c",categoryHome);
+      dispatch(addInFocusImage(categoryHome));
       setCategoriesName("");
       setPhoto("");
       setImagePreview("");
@@ -54,15 +57,6 @@ const HomeInFocus = () => {
   // function for uploading the video
   const handleVideo = (e) => {
     const file = e.target.files[0];
-    // if (file) {
-    //   if (file.size > 1024 * 1024 * 2) {
-    //     alert("plz chose a video less than 2mb");
-    //     return;
-    //   } else {
-    //     setPhoto(file);
-    //     setImagePreview(URL.createObjectURL(file));
-    //   }
-    // }
     console.log("file", file);
     setVideo(file);
     setVideoPreview(URL.createObjectURL(file));
@@ -73,11 +67,12 @@ const handleVideoUpload =()=>{
      console.log("plz upload a video");
      return;
    }
+   dispatch(deletehomeInFocusVideo(home.inFocusVideo.imgId));
     const categoryHome = {
-        CategoryVideo,
+        ...CategoryVideo,
         Video,
       };
-    //   dispatch(addYourEveryMood(categoryHome));
+      dispatch(addInFocusVideo(categoryHome));
       setCategoryVideo("");
       setVideo("");
       setVideoPreview("");
@@ -143,11 +138,11 @@ const handleVideoUpload =()=>{
 
                   <div className="mb-3">
                     <button
-                      disabled={everyMoodLoading}
+                      disabled={inFocusLoader}
                       className="btn btn-primary"
                       onClick={handleCreate}
                     >
-                      {everyMoodLoading ? "Loading..." : "Upload Image"}
+                      {inFocusLoader ? "Loading..." : "Upload Image"}
                     </button>
                   </div>
                 </div>
@@ -172,7 +167,7 @@ const handleVideoUpload =()=>{
                   </Select>
                   <div className="mb-3">
                     <label className="btn btn-outline-secondary col-md-12">
-                      {photo ? photo.name : "Upload Video"}
+                      {Video ? Video.name : "Upload Video"}
                       <input
                         type="file"
                         name="video"
@@ -183,11 +178,10 @@ const handleVideoUpload =()=>{
                     </label>
                   </div>
                   <div className="mb-3">
-                    {photo && (
+                    {Video && (
                       <div className="text-center">
-                        <img
-                          src={imagePreview}
-                          alt="product_photo"
+                        <video
+                          src={VideoPreview}
                           height={"200px"}
                           className="img img-responsive"
                         />
@@ -197,13 +191,23 @@ const handleVideoUpload =()=>{
 
                   <div className="mb-3">
                     <button
-                      disabled={everyMoodLoading}
+                      disabled={inFocusVideoLoader}
                       className="btn btn-primary"
                       onClick={handleVideoUpload}
                     >
-                      {everyMoodLoading ? "Loading..." : "Upload Video"}
+                      {inFocusVideoLoader ? "Loading..." : "Upload Video"}
                     </button>
                   </div>
+                </div>
+              </div>
+              <div className="row mt-4 mb-5">
+                <div className="col-md-6">
+                  <img height={500} width={500} src={home?.inFocusPhoto?.url} alt={home?.inFocusPhoto?.category} />
+                  <p>{home?.inFocusPhoto?.category}</p>
+                </div>
+                <div className="col-md-6">
+                 <video height={500} width={500} src={home?.inFocusVideo?.url}></video>
+                 <p>{home?.inFocusVideo?.category}</p>
                 </div>
               </div>
             </div>

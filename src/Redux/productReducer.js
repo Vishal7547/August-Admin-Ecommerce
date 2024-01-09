@@ -58,7 +58,6 @@ export const addProduct = createAsyncThunk("product/addProduct", async (p) => {
 });
 
 // funtion for fetching data from the product
-
 export const fetchProduct = createAsyncThunk(
   "category/fetchProduct",
   async () => {

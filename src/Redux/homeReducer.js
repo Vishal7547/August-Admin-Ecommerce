@@ -338,6 +338,138 @@ export const addBanner = createAsyncThunk(
   }
 );
 
+// // function for adding image to Infocus section.
+export const addInFocusImage = createAsyncThunk("home/addInFocusImage", async (p) => {
+  try {
+    // firebase storage method for uploading photos
+    const imgId = `image${Date.now()}`;
+    const storageRef = ref(storage, imgId);
+
+    // 'file' comes from the Blob or File API
+    await uploadBytes(storageRef, p.photo).then((snapshot) => {
+      console.log("Uploaded a blob or file!");
+    });
+
+    // get photos url from storage
+
+    const url = await getDownloadURL(storageRef);
+    console.log(url);
+
+    const inFocusPhoto= {
+      imgId,
+      url,
+      category:p.category,
+      id:p.id,
+    };
+    setDoc(
+      doc(db, "home", "jsdfhdsffoidgjdsgoi"),
+      {
+        inFocusPhoto,
+      },
+      { merge: true }
+    );
+    const home = {
+      inFocusPhoto,
+      id: "jsdfhdsffoidgjdsgoi",
+    };
+    return home;
+  } catch (e) {
+    throw new Error(e);
+  }
+});
+
+// delete image of in focus 
+export const deletehomeInFocusImage = createAsyncThunk(
+  "home/deletehomeInFocusImage",
+  async (p) => {
+    console.log(p);
+    try {
+      // Create a reference to the file to delete
+      const desertRef = ref(storage, p);
+
+      // Delete the file
+      deleteObject(desertRef)
+        .then(() => {
+          // File deleted successfully
+          console.log("file is deleted");
+        })
+        .catch((error) => {
+          // Uh-oh, an error occurred!
+
+          console.log(error);
+        });
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+);
+
+// // function for adding video to Infocus section.
+export const addInFocusVideo = createAsyncThunk("home/addInFocusVideo", async (p) => {
+  try {
+    // firebase storage method for uploading photos
+    // console.log("ppppppppppppppppp",p);
+    const imgId = `image${Date.now()}`;
+    const storageRef = ref(storage, imgId);
+
+    // 'file' comes from the Blob or File API
+    await uploadBytes(storageRef, p.Video).then((snapshot) => {
+      console.log("Uploaded a blob or file!");
+    });
+
+    // get photos url from storage
+
+    const url = await getDownloadURL(storageRef);
+    console.log(url);
+
+    const inFocusVideo= {
+      imgId,
+      url,
+      category:p.category,
+      id:p.id,
+    };
+    setDoc(
+      doc(db, "home", "jsdfhdsffoidgjdsgoi"),
+      {
+        inFocusVideo,
+      },
+      { merge: true }
+    );
+    const home = {
+      inFocusVideo,
+      id: "jsdfhdsffoidgjdsgoi",
+    };
+    return home;
+  } catch (e) {
+    throw new Error(e);
+  }
+});
+
+// delete video of in focus 
+export const deletehomeInFocusVideo = createAsyncThunk(
+  "home/deletehomeInFocusVideo",
+  async (p) => {
+    try {
+      // Create a reference to the file to delete
+      const desertRef = ref(storage,p);
+
+      // Delete the file
+      deleteObject(desertRef)
+        .then(() => {
+          // File deleted successfully
+          console.log("file is deleted");
+        })
+        .catch((error) => {
+          // Uh-oh, an error occurred!
+
+          console.log(error);
+        });
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+);
+
 const initialState = {
   home: {
     categories: [],
@@ -350,6 +482,8 @@ const initialState = {
   everyMoodLoading: false,
   everyMoodDeleteLoading:false,
   bannerLoading: false,
+  inFocusLoader:false,
+  inFocusVideoLoader:false,
 };
 
 const homeSlice = createSlice({
@@ -491,6 +625,35 @@ builder.addCase(addBanner.rejected, (state, action) => {
   state.error = true;
 });
 
+    // buider function for Infocus images.
+    builder.addCase(addInFocusImage.pending, (state, action) => {
+      state.inFocusLoader = true;
+      state.error = null;
+    });
+    builder.addCase(addInFocusImage.fulfilled, (state, action) => {
+      state.inFocusLoader = false;
+      state.error = null;
+      state.home = { ...state.home, ...action.payload };
+    });
+    builder.addCase(addInFocusImage.rejected, (state, action) => {
+      state.inFocusLoader = false;
+      state.error = true;
+    });
+
+    // buider function for Infocus Video.
+    builder.addCase(addInFocusVideo.pending, (state, action) => {
+      state.inFocusVideoLoader = true;
+      state.error = null;
+    });
+    builder.addCase(addInFocusVideo.fulfilled, (state, action) => {
+      state.inFocusVideoLoader = false;
+      state.error = null;
+      state.home = { ...state.home, ...action.payload };
+    });
+    builder.addCase(addInFocusVideo.rejected, (state, action) => {
+      state.inFocusVideoLoader = false;
+      state.error = true;
+    });
 
 
   },
