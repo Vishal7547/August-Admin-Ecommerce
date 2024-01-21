@@ -6,6 +6,7 @@ export const UserProvider = ({children})=>{
     const name = "mansi";
   const [admin,setAdmin] = useState(window.localStorage.getItem("admin")?JSON.parse(window.localStorage.getItem("admin")):null);
   const [authLoading,setauthLoading] = useState(false);
+  
   useEffect(()=>{
     setauthLoading(true);
     onAuthStateChanged(auth, (user) => {
@@ -16,7 +17,7 @@ export const UserProvider = ({children})=>{
         window.localStorage.setItem("admin",JSON.stringify(user));
         setAdmin(user);
       } 
-    });
+    })
   },[])
 
 return (

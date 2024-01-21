@@ -15,6 +15,7 @@ const CreateProduct = () => {
   const [shipping, setShipping] = useState("");
   const [photo, setPhoto] = useState("");
   const [imagePreview, setImagePreview] = useState("");
+  const [actualPrice,setActualPrice] = useState("");
   const { category } = useSelector((state) => state.categoryreducer);
   // function for creating product
   const handleCreate = () => {
@@ -26,6 +27,7 @@ const CreateProduct = () => {
       quantity,
       shipping,
       photo,
+      actualPrice,
     };
     dispatch(addProduct(product));
     setName("");
@@ -36,6 +38,7 @@ const CreateProduct = () => {
     setShipping("");
     setPhoto("");
     setImagePreview("");
+    setActualPrice("");
   };
   //  function for setting the photo
   const handlePhoto = (e) => {
@@ -127,8 +130,21 @@ const CreateProduct = () => {
                   placeholder="write a Price"
                   className="form-control"
                   onChange={(e) => setPrice(e.target.value)}
+                  
                 />
               </div>
+
+              <div className="mb-3">
+                <input
+                  type="text"
+                  value={actualPrice}
+                  placeholder="write the Actual Price"
+                  className="form-control"
+                  onChange={(e) => setActualPrice(e.target.value)}
+                  
+                />
+              </div>
+
               <div className="mb-3">
                 <input
                   type="number"
