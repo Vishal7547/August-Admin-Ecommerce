@@ -16,6 +16,7 @@ import HomeCategory from "./Pages/HomeCategory";
 import HomeBanner from "./Pages/HomeBanner";
 import HomeEveryMood from "./Pages/HomeEveryMood";
 import HomeInFocus from "./Pages/HomeInFocus";
+import Orders from "./Pages/Orders";
 
 function App() {
   const name = useContext(userContext);
@@ -123,6 +124,16 @@ function App() {
               </Adimroute>
             }
           />
+
+<Route
+            path="/orders"
+            element={
+              <Adimroute>
+                <Orders/>
+              </Adimroute>
+            }
+          />
+
 
         </Routes>
       </BrowserRouter>

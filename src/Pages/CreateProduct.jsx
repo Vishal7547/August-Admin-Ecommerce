@@ -28,6 +28,7 @@ const CreateProduct = () => {
       shipping,
       photo,
       actualPrice,
+      
     };
     dispatch(addProduct(product));
     setName("");

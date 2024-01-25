@@ -45,10 +45,13 @@ export const addProduct = createAsyncThunk("product/addProduct", async (p) => {
       quantity: p.quantity,
       shipping: p.shipping,
       photo,
+      actualPrice:p.actualPrice,
+      qty:1,
     });
     const product = {
       ...p,
       photo,
+      qty:1,
       id: docRef.id,
     };
     return product;

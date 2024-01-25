@@ -68,7 +68,7 @@ navigate("/");
         <li className="nav__items">
           <CiShoppingCart fontSize={20} />
 
-          <Link to="/">Orders</Link>
+          <Link to="/orders">Orders</Link>
         </li>
         <li className="nav__items">
           <SlSettings fontSize={20} />
