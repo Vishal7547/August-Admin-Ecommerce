@@ -1,18 +1,18 @@
 import { initializeApp } from "firebase/app";
-import {getFirestore} from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 const firebaseConfig = {
-  apiKey: "AIzaSyDNre2blwCWIwErP8h80CR0Y1RjoX4MRJ8",
-  authDomain: "ecommerce-55e3f.firebaseapp.com",
-  projectId: "ecommerce-55e3f",
-  storageBucket: "ecommerce-55e3f.appspot.com",
-  messagingSenderId: "306849406442",
-  appId: "1:306849406442:web:9c2fe5e8b7b288460ae693"
+  apiKey: "AIzaSyAIxysidXf4lAcYIcTxKfeObXhs0lSZh-w",
+  authDomain: "urbanic-6faf5.firebaseapp.com",
+  projectId: "urbanic-6faf5",
+  storageBucket: "urbanic-6faf5.appspot.com",
+  messagingSenderId: "558882126260",
+  appId: "1:558882126260:web:b911554473417af76c9ae1",
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 const storage = getStorage(app);
-export {app,db,auth,storage};     
+export { app, db, auth, storage };
